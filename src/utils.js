@@ -45,15 +45,15 @@ function shouldAddEndOfItemsSymbol (data, count) {
   return (data.length - 1) === count
 }
 
-function parse (data, depth = 0) {
+function parseJSONTree (data, depth = 0) {
   depth++
   data.forEach((item, index) => {
     outString(item, depth, shouldAddEndOfItemsSymbol(data, index))
-    parse(getChildItems(item), depth)
+    parseJSONTree(getChildItems(item), depth)
   })
 }
 
 module.exports = {
-  parse,
+  parseJSONTree,
   prepareJsonData
 }
