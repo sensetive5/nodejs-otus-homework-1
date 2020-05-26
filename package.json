@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sensetive5/nodejs-otus/issues"
   },
-  "homepage": "https://github.com/sensetive5/nodejs-otus#readme"
+  "homepage": "https://github.com/sensetive5/nodejs-otus#readme",
+  "devDependencies": {
+    "eslint": "^7.1.0"
+  }
 }

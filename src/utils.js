@@ -10,9 +10,10 @@ function prepareJsonData(data) {
   return Array.isArray(data) ? data : [data]
 }
 
-function getSpaces(depth, lastNotEndDepth, isEnd) {
+function getSpaces(depth, lastNotEndDepth) {
   const SPACES_PATTERN = `    `
   const NOT_END_PATTERN = `|   `
+
   let spacesString = ''
 
   for (let i = 1; i < lastNotEndDepth; i++) {
@@ -33,7 +34,7 @@ function getCorrectPrefixSymbol(isEnd = false) {
   return isEnd ? NEXT_LEVEL : PARENT_PREFIX
 }
 
-const outString = (item, depth, lastNotEndDepth, isEnd = false) => {
+const print = (item, depth, lastNotEndDepth, isEnd = false) => {
   const prefixSymbol = getCorrectPrefixSymbol(isEnd)
 
   const name = getItemName(item)
@@ -42,20 +43,24 @@ const outString = (item, depth, lastNotEndDepth, isEnd = false) => {
   console.log(finalString)
 }
 
-function shouldAddEndOfItemsSymbol(data, count) {
+function isEndOfItems(data, count) {
   return (data.length - 1) === count
 }
 
-function parseJSONTree(data, depth = 0, lastNotEndDepth = 1) {
-  depth++;
+function increaseDepth(depth = 0) {
+  return ++depth;
+}
+
+function parseJSONTree(data, startDepth = 0, endDepth = 1) {
+  const startDepthLevel = increaseDepth(startDepth);
   data.forEach((item, index) => {
-    const isEnd = shouldAddEndOfItemsSymbol(data, index);
-    outString(item, depth, lastNotEndDepth, isEnd)
-    if (isEnd) {
-      parseJSONTree(getChildItems(item), depth, lastNotEndDepth + 1)
-    } else {
-      parseJSONTree(getChildItems(item), depth, lastNotEndDepth)
-    }
+    const isEnd = isEndOfItems(data, index);
+    const endDepthLevel = isEnd
+      ? increaseDepth(endDepth)
+      : endDepth;
+
+    print(item, startDepthLevel, endDepth, isEnd);
+    parseJSONTree(getChildItems(item), startDepthLevel, endDepthLevel);
   })
 }
 
