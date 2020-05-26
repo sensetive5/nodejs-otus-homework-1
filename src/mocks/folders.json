@@ -5,13 +5,40 @@
       "name": 2,
       "items": [
         {
-          "name": 3
+          "name": 3,
+          "items": [
+            {
+              "name": 100
+            },
+            {
+              "name": 200
+            },
+            {
+              "name": 300
+            }
+          ]
         },
         {
           "name": 4
         },
         {
-          "name": 5
+          "name": 5,
+          "items": [
+            {
+              "name": 400,
+              "items": [
+                {
+                  "name": 1000
+                }
+              ]
+            },
+            {
+              "name": 500
+            },
+            {
+              "name": 600
+            }
+          ]
         },
         {
           "name": 6
