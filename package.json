@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/sensetive5/nodejs-otus#readme",
   "devDependencies": {
-    "eslint": "^7.1.0"
+    "eslint": "^7.1.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0"
   }
 }
