@@ -1,50 +1,56 @@
-function getItemName(value) {
-  return value && value.hasOwnProperty('name') ? value.name : ''
+function getItemName(value = {}) {
+  return value && value.hasOwnProperty('name')
+    ? value.name
+    : '';
 }
 
-function getChildItems(value) {
-  return value && value.hasOwnProperty('items') ? value.items : []
+function getChildItems(value = {}) {
+  return value && value.hasOwnProperty('items')
+    ? value.items
+    : [];
 }
 
 function prepareJsonData(data) {
-  return Array.isArray(data) ? data : [data]
+  return Array.isArray(data)
+    ? data
+    : [data];
 }
 
-function getSpaces(depth, lastNotEndDepth) {
-  const SPACES_PATTERN = `    `
-  const NOT_END_PATTERN = `|   `
+function getSpaces(depth, endDepthLevel) {
+  const SPACES_PATTERN = `    `;
+  const DIVIDER_PATTERN = `|   `;
 
-  let spacesString = ''
+  let spacesString = Array(endDepthLevel - 1)
+    .fill(SPACES_PATTERN)
+    .join('');
 
-  for (let i = 1; i < lastNotEndDepth; i++) {
-    spacesString += SPACES_PATTERN;
-  }
+  for (let i = endDepthLevel; i < depth; ++i)
+    spacesString += DIVIDER_PATTERN;
 
-  for (let i = lastNotEndDepth; i < depth; ++i) {
-    spacesString += NOT_END_PATTERN;
-  }
-
-  return spacesString
+  return spacesString;
 }
 
 function getCorrectPrefixSymbol(isEnd = false) {
-  const PARENT_PREFIX = '├──'
-  const NEXT_LEVEL = '└──'
+  const PARENT_PREFIX = '├──';
+  const NEXT_LEVEL = '└──';
 
-  return isEnd ? NEXT_LEVEL : PARENT_PREFIX
+  return isEnd
+    ? NEXT_LEVEL
+    : PARENT_PREFIX;
 }
 
-const print = (item, depth, lastNotEndDepth, isEnd = false) => {
-  const prefixSymbol = getCorrectPrefixSymbol(isEnd)
+const print = (item = {}, startDepthLevel = 0, endDepthLevel = 0, isEnd = false) => {
+  const prefixSymbol = getCorrectPrefixSymbol(isEnd);
 
-  const name = getItemName(item)
-  const spaces = getSpaces(depth, lastNotEndDepth, isEnd)
-  const finalString = `${spaces}${prefixSymbol} ${name}`
-  console.log(finalString)
+  const name = getItemName(item);
+  const spaces = getSpaces(startDepthLevel, endDepthLevel, isEnd);
+  const finalString = `${spaces}${prefixSymbol} ${name}`;
+
+  console.log(finalString);
 }
 
-function isEndOfItems(data, count) {
-  return (data.length - 1) === count
+function isEndOfItems(data = [], itemsCount = 0) {
+  return (data.length - 1) === itemsCount;
 }
 
 function increaseDepth(depth = 0) {
