@@ -8,5 +8,4 @@ const rawData = fs.readFileSync(filePath);
 const parsedRawData = JSON.parse(rawData.toString());
 const preparedData = prepareJsonData(parsedRawData);
 
-console.log(process.argv);
 parseJSONTree(preparedData);
