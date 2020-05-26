@@ -16,7 +16,7 @@ function prepareJsonData(data) {
     : [data];
 }
 
-function getSpaces(depth, endDepthLevel) {
+function getSpaces(startDepth = 0, endDepthLevel = 0) {
   const SPACES_PATTERN = `    `;
   const DIVIDER_PATTERN = `|   `;
 
@@ -24,7 +24,7 @@ function getSpaces(depth, endDepthLevel) {
     .fill(SPACES_PATTERN)
     .join('');
 
-  for (let i = endDepthLevel; i < depth; ++i)
+  for (let i = endDepthLevel; i < startDepth; ++i)
     spacesString += DIVIDER_PATTERN;
 
   return spacesString;
@@ -50,7 +50,7 @@ const print = (item = {}, startDepthLevel = 0, endDepthLevel = 0, isEnd = false)
 }
 
 function isEndOfItems(data = [], itemsCount = 0) {
-  return (data.length - 1) === itemsCount;
+  return data && ((data.length - 1) === itemsCount);
 }
 
 function increaseDepth(depth = 0) {
